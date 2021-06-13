@@ -3,6 +3,7 @@ module github.com/TuhinNair/simplog
 go 1.16
 
 require (
+	github.com/casbin/casbin v1.9.1
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/kr/pretty v0.1.0 // indirect

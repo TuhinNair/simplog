@@ -1,0 +1,16 @@
+{
+    "CN": "Tuhin Nair",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "IN",
+            "L": "KA",
+            "ST": "Bengaluru",
+            "O": "Tuhin Nair",
+            "OU": "Tuhin Nair"
+        }
+    ]
+}

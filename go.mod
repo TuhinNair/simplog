@@ -6,6 +6,8 @@ require (
 	github.com/casbin/casbin v1.9.1
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
+	github.com/hashicorp/raft v1.3.1
+	github.com/hashicorp/raft-boltdb v0.0.0-00010101000000-000000000000
 	github.com/hashicorp/serf v0.8.5
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/stretchr/testify v1.7.0
@@ -19,3 +21,5 @@ require (
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 )
+
+replace github.com/hashicorp/raft-boltdb => github.com/travisjeffery/raft-boltdb v1.0.0

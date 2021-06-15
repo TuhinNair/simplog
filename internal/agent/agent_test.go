@@ -12,6 +12,7 @@ import (
 	api "github.com/TuhinNair/simplog/api/v1"
 	"github.com/TuhinNair/simplog/internal/agent"
 	"github.com/TuhinNair/simplog/internal/config"
+	"github.com/TuhinNair/simplog/internal/loadbalance"
 	"github.com/stretchr/testify/require"
 	"github.com/travisjeffery/go-dynaport"
 	"google.golang.org/grpc"
@@ -79,11 +80,12 @@ func TestAgent(t *testing.T) {
 	produceResponse, err := leaderClient.Produce(context.Background(), &api.ProduceRequest{Record: &api.Record{Value: []byte("foo")}})
 	require.NoError(t, err)
 
+	time.Sleep(3 * time.Second)
+
 	consumeResponse, err := leaderClient.Consume(context.Background(), &api.ConsumeRequest{Offset: produceResponse.Offset})
 	require.NoError(t, err)
 	require.Equal(t, consumeResponse.Record.Value, []byte("foo"))
 
-	time.Sleep(3 * time.Second)
 	followerClient := client(t, agents[1], peerTLSConfig)
 	consumeResponse, err = followerClient.Consume(context.Background(), &api.ConsumeRequest{Offset: produceResponse.Offset})
 	require.NoError(t, err)
@@ -102,7 +104,7 @@ func client(t *testing.T, agent *agent.Agent, tlsConfig *tls.Config) api.LogClie
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(tlsCreds)}
 	rpcAddr, err := agent.Config.RPCAddr()
 	require.NoError(t, err)
-	conn, err := grpc.Dial(fmt.Sprintf("%s", rpcAddr), opts...)
+	conn, err := grpc.Dial(fmt.Sprintf("%s:///%s", loadbalance.Name, rpcAddr), opts...)
 	require.NoError(t, err)
 	client := api.NewLogClient(conn)
 	return client

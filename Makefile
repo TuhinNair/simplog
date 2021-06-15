@@ -1,4 +1,8 @@
+TAG ?= 0.0.1
 CONFIG_PATH=${HOME}/.simplog/
+
+build-docker:
+	docker build -t simplog:$(TAG) .
 
 ${CONFIG_PATH}/model.conf:
 	cp test/model.conf ${CONFIG_PATH}/model.conf
